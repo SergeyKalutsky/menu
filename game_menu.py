@@ -124,8 +124,8 @@ class MainMenu():
 
 class TopPanel():
     def __init__(self, x=5, y=5):
-        self.font = pygame.font.SysFont('Arial', 25, True)
-        self.text = self.font.render('ПРИВЕТ', True, YELLOW)
+        self.font = pygame.font.SysFont('Arial', 30, True)
+        self.coins = 0
 
         self.surface = pygame.Surface([WIN_WIDTH, 40])
         self.surface.fill(BLUE)
@@ -133,7 +133,13 @@ class TopPanel():
         self.rect = self.surface.get_rect()
         self.rect.x, self.rect.y = x, y
     
+        self.coin = pygame.image.load('coin.png')
+
     def draw(self, screen):
         screen.blit(self.surface, self.rect)
-        screen.blit(self.text, (self.rect.x+10, self.rect.y+2))
+        screen.blit(self.coin, (self.rect.x+10, self.rect.y+2))
+        self.text = self.font.render(str(self.coins), True, YELLOW)
+        screen.blit(self.text, (self.rect.x+50, self.rect.y+2))
 
+    def update(self, coins):
+        self.coins = coins

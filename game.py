@@ -32,7 +32,7 @@ class Game:
         self.state = "START"
 
         self.main_menu = game_menu.MainMenu(300, 200)
-        self.top_panel = game_menu.TopPanel()
+        self.top_panel = game_menu.TopPanel(y=0)
 
     def create_artifacts(self):
         # Создаем артефакты (монеты) в игре
@@ -138,6 +138,7 @@ class Game:
             else:
                 self.main_menu.update()
             # Прорисовываем экран в зависимости от состояния игры
+            self.top_panel.update(self.player.score)
             self.draw_scene()
             pygame.display.flip()
             self.clock.tick(60)
