@@ -1,12 +1,13 @@
 import pygame
 from constants import *
 
+
 class Button():
     def __init__(
             self, x, y, w, h, name,
             font_color=WHITE,
             normal_color=BLUE,
-            highlight_color = GREEN,
+            highlight_color=GREEN,
             active_color=BLACK,
             size=24,
             font='Arial',
@@ -25,7 +26,7 @@ class Button():
         # Создаем надпись на кнопке
         self.text = self.font.render(name, True, font_color)
         # Задаем размеры прямоугольника
-        self.image = pygame.Surface([w,h])
+        self.image = pygame.Surface([w, h])
         self.image.fill(normal_color)
         # Задаем положение верхней панели на экране
         self.rect = self.image.get_rect()
@@ -37,10 +38,11 @@ class Button():
     # Рисуем прямоугольник кнопки и надпись на ней
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-        screen.blit(self.text, (self.rect.x + self.padding, self.rect.y + self.padding))
-
+        screen.blit(self.text, (self.rect.x + self.padding,
+                    self.rect.y + self.padding))
 
     # В методе update меняем цвет кнокпи в зависимости от состояния
+
     def update(self):
         if self.state == 'normal':
             self.image.fill(self.normal_color)
@@ -49,8 +51,8 @@ class Button():
         elif self.state == 'active':
             self.image.fill(self.active_color)
 
-
     # Обработка событий кнопки:  меняем состояние в зависимости от события
+
     def handle_mouse_action(self, event=None):
         # Получаем текущее положение курсора
         pos_x, pos_y = pygame.mouse.get_pos()
@@ -58,13 +60,19 @@ class Button():
         check_pos = self.rect.left <= pos_x <= self.rect.right and self.rect.top <= pos_y <= self.rect.bottom
         # Курсор движется над кнопкой:
         if event == pygame.MOUSEMOTION:
-            if check_pos:  self.state = 'highlight'
-            else: self.state = 'normal'
+            if check_pos:
+                self.state = 'highlight'
+            else:
+                self.state = 'normal'
         # На кнопку кликнули:
         elif event == pygame.MOUSEBUTTONDOWN:
-            if check_pos: self.state = 'active'
-            else: self.state = 'normal'
+            if check_pos:
+                self.state = 'active'
+            else:
+                self.state = 'normal'
         # На кнопку кликнули и отпустили:
         elif event == pygame.MOUSEBUTTONUP:
-            if check_pos:  self.state = 'highlight'
-            else: self.state = 'normal'
+            if check_pos:
+                self.state = 'highlight'
+            else:
+                self.state = 'normal'

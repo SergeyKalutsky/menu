@@ -101,6 +101,7 @@ class Game:
     
     def run(self):
         done = False
+        button = game_menu.Button(100, 50, 100, 50 , 'Привет')
         while not done:
             for event in pygame.event.get():
                 # Обрабатываем закрытие окна
@@ -108,6 +109,7 @@ class Game:
                     done = True
                 # Обрабатываем события для разных состояний игры:
                 self.handle_scene(event)
+                button.handle_mouse_action(event.type)
             # Если идет игра, обновляем положение всех спрайтов в игре:
             if self.state == "GAME":
                 self.all_sprite_list.update()
@@ -117,7 +119,7 @@ class Game:
                     done = True
             # Прорисовываем экран в зависимости от состояния игры 
             self.draw_scene()
-            button = game_menu.Button(100, 50, 100, 50 , 'Привет')
+            button.update()
             button.draw(self.screen)
             pygame.display.flip()
             self.clock.tick(60)
