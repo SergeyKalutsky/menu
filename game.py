@@ -133,8 +133,9 @@ class Game:
                 if self.player.rect.x > WIN_WIDTH - 70 and self.player.rect.y > WIN_HEIGHT - 70:
                     self.state = "FINISH"
                     done = True
+            else:
+                self.main_menu.update()
             # Прорисовываем экран в зависимости от состояния игры
-            self.main_menu.update()
             self.draw_scene()
             pygame.display.flip()
             self.clock.tick(60)
