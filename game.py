@@ -28,7 +28,9 @@ class Game:
         self.player.artifacts = self.artifact_list
         self.clock = pygame.time.Clock()
         # Задаем текущие состоятния игры ("START", "GAME", "PAUSE" или "FINISH")
-        self.state = "GAME"
+        self.state = "START"
+
+        self.main_menu = game_menu.MainMenu(300, 200)
 
     def create_artifacts(self):
         # Создаем артефакты (монеты) в игре
@@ -62,6 +64,7 @@ class Game:
         
 
     def handle_scene(self, event):
+        active_button = self.main_menu.handle_mouse_event(event.type)
         # обрабатываем сцену Идет Игра
         if self.state == "GAME":
             # обрабатываем нажатие клавиш - стрелок
@@ -79,11 +82,11 @@ class Game:
                 if event.key == pygame.K_RIGHT and self.player.change_x > 0:
                     self.player.stop()
 
-        # обрабатываем сцену Игра Закончена
-        elif self.state == "FINISH":
-            pass
         # Обрабатываем сцену Стартовый экран
         elif self.state == "START" :
+            pass
+        # обрабатываем сцену Игра Закончена
+        elif self.state == "FINISH":
             pass
 
     def draw_scene(self):
@@ -93,7 +96,8 @@ class Game:
         if self.state == "GAME":
             self.all_sprite_list.draw(self.screen)
         # Обрабатываем сцену Стартовый экран
-        elif self.state == "START": pass
+        elif self.state == "START":
+            self.main_menu.draw(self.screen)
         # Обрабатываем сцену Пауза
         elif self.state == "PAUSE": pass
         # Обрабатываем сцену Игра Окончена
@@ -101,7 +105,6 @@ class Game:
     
     def run(self):
         done = False
-        button = game_menu.Button(100, 50, 100, 50 , 'Привет')
         while not done:
             for event in pygame.event.get():
                 # Обрабатываем закрытие окна
@@ -109,7 +112,6 @@ class Game:
                     done = True
                 # Обрабатываем события для разных состояний игры:
                 self.handle_scene(event)
-                button.handle_mouse_action(event.type)
             # Если идет игра, обновляем положение всех спрайтов в игре:
             if self.state == "GAME":
                 self.all_sprite_list.update()
@@ -118,9 +120,8 @@ class Game:
                     self.state = "FINISH"
                     done = True
             # Прорисовываем экран в зависимости от состояния игры 
+            self.main_menu.update()
             self.draw_scene()
-            button.update()
-            button.draw(self.screen)
             pygame.display.flip()
             self.clock.tick(60)
         pygame.quit()

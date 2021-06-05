@@ -76,3 +76,48 @@ class Button():
                 self.state = 'highlight'
             else:
                 self.state = 'normal'
+
+
+class MainMenu():
+    def __init__(self, w, h):
+        # Создаем список пунктов меню:
+        self.labels = [
+            "START",
+            "CONTINUE",
+            "QUIT"
+        ]
+        # Задаем координаты верхнего левого угла меню:
+        self.x = (WIN_WIDTH - w) // 2
+        self.y = (WIN_HEIGHT - h) // 2
+        # Создаем список кнопок:
+        self.buttons = []
+        # Рассчитываем высоту для каждой кнопки меню, исходя и общей высоты:
+        button_height = int(h / (len(self.labels) + 1))
+        # Локальная переменная, хранит y координату для текущей кнопки:
+        current_y = self.y
+        for label in self.labels:
+            # Создаем новую кнопку:
+            new_button = Button(self.x, current_y, w, button_height, label)
+            # Переходим по вертикали к следующей кнопке с отступом в 2 пикселя,
+            # чтобы кнопки визуально не "слиплись" между собой:
+            current_y += button_height + 2
+            # Добавляем новую кнопку в список всех кнопок меню:
+            self.buttons.append(new_button)
+
+    # Вызвать метод update() для всех кнопок в меню:
+    def update(self):
+        for button in self.buttons:
+            button.update()
+
+    # Вызвать метод обработки события для всех кнопок в меню:
+    def handle_mouse_event(self, event):
+        for button in self.buttons:
+            button.handle_mouse_action(event)
+        # запоминаем и возвращаем кнопку, н которую сейчас нажали:
+            if button.state == "active":
+                return button
+        
+    # Вызвать метод draw для всех кнопок в меню
+    def draw(self, screen):
+        for button in self.buttons:
+            button.draw(screen)
