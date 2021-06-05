@@ -65,6 +65,19 @@ class Game:
 
     def handle_scene(self, event):
         active_button = self.main_menu.handle_mouse_event(event.type)
+        if active_button:
+            active_button.state = 'normal'
+
+            if active_button.name == "START":
+                self.player.rect.x, self.player.rect.y = 10, 10
+                self.state = 'GAME'
+
+            if active_button.name == "CONTINUE":
+                self.state = 'GAME'
+
+            if active_button.name == "QUIT":
+                pygame.quit()
+                
         # обрабатываем сцену Идет Игра
         if self.state == "GAME":
             # обрабатываем нажатие клавиш - стрелок
