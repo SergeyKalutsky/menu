@@ -70,6 +70,8 @@ class Game:
             active_button.state = 'normal'
 
             if active_button.name == "START":
+                self.create_artifacts()
+                self.player.artifacts = self.artifact_list
                 self.player.rect.x, self.player.rect.y = 20, 540
                 self.state = 'GAME'
 
