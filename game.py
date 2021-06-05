@@ -3,6 +3,7 @@ import game_object
 import game_menu
 from constants import *
 
+
 class Game:
     def __init__(self):
         # инициализируем библиотеку pygame
@@ -58,10 +59,10 @@ class Game:
             [550, 450, 250, 10]
         ]
         for coord in platform_coords:
-            platform = game_object.Platform(coord[0], coord[1], coord[2], coord[3])
+            platform = game_object.Platform(
+                coord[0], coord[1], coord[2], coord[3])
             self.platform_list.add(platform)
             self.all_sprite_list.add(platform)
-        
 
     def handle_scene(self, event):
         active_button = self.main_menu.handle_mouse_event(event.type)
@@ -88,6 +89,8 @@ class Game:
                     self.player.go_right()
                 elif event.key == pygame.K_UP:
                     self.player.jump()
+                elif event.key == pygame.K_ESCAPE:
+                    self.state = 'PAUSE'
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and self.player.change_x < 0:
@@ -96,7 +99,7 @@ class Game:
                     self.player.stop()
 
         # Обрабатываем сцену Стартовый экран
-        elif self.state == "START" :
+        elif self.state == "START":
             pass
         # обрабатываем сцену Игра Закончена
         elif self.state == "FINISH":
@@ -109,13 +112,9 @@ class Game:
         if self.state == "GAME":
             self.all_sprite_list.draw(self.screen)
         # Обрабатываем сцену Стартовый экран
-        elif self.state == "START":
+        if self.state in ["START", "PAUSE"]:
             self.main_menu.draw(self.screen)
-        # Обрабатываем сцену Пауза
-        elif self.state == "PAUSE": pass
-        # Обрабатываем сцену Игра Окончена
-        elif self.state == "FINISH": pass
-    
+
     def run(self):
         done = False
         while not done:
@@ -132,12 +131,13 @@ class Game:
                 if self.player.rect.x > WIN_WIDTH - 70 and self.player.rect.y > WIN_HEIGHT - 70:
                     self.state = "FINISH"
                     done = True
-            # Прорисовываем экран в зависимости от состояния игры 
+            # Прорисовываем экран в зависимости от состояния игры
             self.main_menu.update()
             self.draw_scene()
             pygame.display.flip()
             self.clock.tick(60)
         pygame.quit()
+
 
 game = Game()
 game.run()
