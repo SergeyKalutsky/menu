@@ -69,7 +69,7 @@ class Game:
             active_button.state = 'normal'
 
             if active_button.name == "START":
-                self.player.rect.x, self.player.rect.y = 10, 10
+                self.player.rect.x, self.player.rect.y = 20, 540
                 self.state = 'GAME'
 
             if active_button.name == "CONTINUE":
@@ -77,7 +77,7 @@ class Game:
 
             if active_button.name == "QUIT":
                 pygame.quit()
-                
+
         # обрабатываем сцену Идет Игра
         if self.state == "GAME":
             # обрабатываем нажатие клавиш - стрелок
