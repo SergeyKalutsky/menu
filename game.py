@@ -32,6 +32,7 @@ class Game:
         self.state = "START"
 
         self.main_menu = game_menu.MainMenu(300, 200)
+        self.top_panel = game_menu.TopPanel()
 
     def create_artifacts(self):
         # Создаем артефакты (монеты) в игре
@@ -113,6 +114,7 @@ class Game:
         # Обрабатываем сцену Идет Игра
         if self.state == "GAME":
             self.all_sprite_list.draw(self.screen)
+            self.top_panel.draw(self.screen)
         # Обрабатываем сцену Стартовый экран
         if self.state in ["START", "PAUSE"]:
             self.main_menu.draw(self.screen)
