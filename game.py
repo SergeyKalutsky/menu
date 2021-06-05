@@ -121,6 +121,7 @@ class Game:
 
     def run(self):
         done = False
+        time = 0
         while not done:
             for event in pygame.event.get():
                 # Обрабатываем закрытие окна
@@ -130,6 +131,7 @@ class Game:
                 self.handle_scene(event)
             # Если идет игра, обновляем положение всех спрайтов в игре:
             if self.state == "GAME":
+                time += 1/(FPS+1)
                 self.all_sprite_list.update()
                 # Проверяем, не достиг ли игрок выхода:
                 if self.player.rect.x > WIN_WIDTH - 70 and self.player.rect.y > WIN_HEIGHT - 70:
@@ -138,7 +140,7 @@ class Game:
             else:
                 self.main_menu.update()
             # Прорисовываем экран в зависимости от состояния игры
-            self.top_panel.update(self.player.score)
+            self.top_panel.update(int(time))
             self.draw_scene()
             pygame.display.flip()
             self.clock.tick(60)
